@@ -1,4 +1,5 @@
 import { experience, identity, skillGroups } from '../data/profile';
+import { DownloadIcon, GitHubIcon, LinkedInIcon } from './Icons';
 
 export function Hero() {
   const current = experience[0];
@@ -14,12 +15,15 @@ export function Hero() {
         <p className="lede">{identity.summary}</p>
         <div className="hero__cta">
           <a className="btn btn--primary" href={resumeUrl} download>
+            <DownloadIcon />
             Download resume
           </a>
           <a className="btn btn--ghost" href={identity.github} target="_blank" rel="noreferrer">
+            <GitHubIcon />
             GitHub
           </a>
           <a className="btn btn--ghost" href={identity.linkedin} target="_blank" rel="noreferrer">
+            <LinkedInIcon />
             LinkedIn
           </a>
         </div>

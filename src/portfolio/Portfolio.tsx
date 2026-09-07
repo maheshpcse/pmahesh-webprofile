@@ -1,6 +1,7 @@
 import { identity } from '../data/profile';
 import { useReveal } from '../hooks/useReveal';
 import { Contact } from './Contact';
+import { Cursor } from './Cursor';
 import { Header } from './Header';
 import { Hero } from './Hero';
 import { Journey } from './Journey';
@@ -21,6 +22,7 @@ export function Portfolio({ active, onReplay }: PortfolioProps) {
       <a className="skip-link" href="#journey">
         Skip to content
       </a>
+      {active && <Cursor />}
       <Header onReplay={onReplay} />
       <main>
         <Hero />

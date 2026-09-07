@@ -1,4 +1,15 @@
 :root {
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+  --max: 1120px;
+  --pad: clamp(20px, 4vw, 48px);
+  --radius: 8px;
+  --enter: 0;
+}
+
+/* Theme tokens. Dark is the default; the intro stage is always dark. */
+:root,
+:root[data-theme='dark'] {
   --bg: #0a0b0d;
   --bg-elev: #0f1114;
   --surface: #12151a;
@@ -9,13 +20,140 @@
   --muted: #8a94a0;
   --accent: #9cc9ff;
   --accent-ink: #0a0b0d;
-  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
-  --max: 1120px;
-  --pad: clamp(20px, 4vw, 48px);
-  --radius: 8px;
-  --enter: 0;
+  --primary-hover: #ffffff;
+  --hover-wash: rgba(255, 255, 255, 0.03);
+  --header-bg: rgba(10, 11, 13, 0.85);
   color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #f7f8fa;
+  --bg-elev: #ffffff;
+  --surface: #eef1f5;
+  --line: #e1e5eb;
+  --line-strong: #c9d0d9;
+  --text: #14171c;
+  --text-2: #3d4652;
+  --muted: #6b7684;
+  --accent: #1f5fb4;
+  --accent-ink: #ffffff;
+  --primary-hover: #000000;
+  --hover-wash: rgba(0, 0, 0, 0.035);
+  --header-bg: rgba(247, 248, 250, 0.85);
+  color-scheme: light;
+}
+
+.theme-transition,
+.theme-transition * {
+  transition: background-color 220ms ease, border-color 220ms ease, color 220ms ease !important;
+}
+
+/* ---------- Cursor (native) ----------
+   Structured OS-style cursors as inline SVG: a crosshair for browsing and
+   corner brackets for interactive targets. Each has a dark/light outline so
+   it stays visible over both themes. Falls back to auto/pointer. */
+:root,
+:root[data-theme='dark'] {
+  --cur-default: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M8 1v4M8 11v4M1 8h4M11 8h4' stroke='%23000' stroke-width='3.4' opacity='.55'/%3E%3Cpath d='M8 1v4M8 11v4M1 8h4M11 8h4' stroke='%23e8eaee' stroke-width='1.6'/%3E%3C/g%3E%3C/svg%3E")
+    8 8;
+  --cur-pointer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 7V2h5M13 2h5v5M18 13v5h-5M7 18H2v-5' stroke='%23000' stroke-width='3.4' opacity='.55'/%3E%3Cpath d='M2 7V2h5M13 2h5v5M18 13v5h-5M7 18H2v-5' stroke='%239cc9ff' stroke-width='1.6'/%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%239cc9ff'/%3E%3C/g%3E%3C/svg%3E")
+    10 10;
+}
+:root[data-theme='light'] {
+  --cur-default: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M8 1v4M8 11v4M1 8h4M11 8h4' stroke='%23fff' stroke-width='3.4' opacity='.9'/%3E%3Cpath d='M8 1v4M8 11v4M1 8h4M11 8h4' stroke='%2314171c' stroke-width='1.6'/%3E%3C/g%3E%3C/svg%3E")
+    8 8;
+  --cur-pointer: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 7V2h5M13 2h5v5M18 13v5h-5M7 18H2v-5' stroke='%23fff' stroke-width='3.4' opacity='.9'/%3E%3Cpath d='M2 7V2h5M13 2h5v5M18 13v5h-5M7 18H2v-5' stroke='%231f5fb4' stroke-width='1.6'/%3E%3Ccircle cx='10' cy='10' r='1.5' fill='%231f5fb4'/%3E%3C/g%3E%3C/svg%3E")
+    10 10;
+}
+
+@media (pointer: fine) {
+  html {
+    cursor: var(--cur-default), auto;
+  }
+  a,
+  button,
+  [role='button'],
+  summary,
+  label,
+  select {
+    cursor: var(--cur-pointer), pointer;
+  }
+  button:disabled {
+    cursor: var(--cur-default), not-allowed;
+  }
+  p,
+  li,
+  h1,
+  h2,
+  h3,
+  dd,
+  dt,
+  pre,
+  input,
+  textarea {
+    cursor: var(--cur-default), text;
+  }
+  a *,
+  button * {
+    cursor: inherit;
+  }
+}
+
+/* ---------- Cursor (reticle follower) ---------- */
+.reticle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 22px;
+  height: 22px;
+  pointer-events: none;
+  opacity: 0;
+  --rc: var(--accent);
+  --rl: 7px; /* bracket arm length */
+  --rt: 1px; /* bracket thickness */
+  background:
+    linear-gradient(var(--rc), var(--rc)) left top / var(--rl) var(--rt) no-repeat,
+    linear-gradient(var(--rc), var(--rc)) left top / var(--rt) var(--rl) no-repeat,
+    linear-gradient(var(--rc), var(--rc)) right top / var(--rl) var(--rt) no-repeat,
+    linear-gradient(var(--rc), var(--rc)) right top / var(--rt) var(--rl) no-repeat,
+    linear-gradient(var(--rc), var(--rc)) left bottom / var(--rl) var(--rt) no-repeat,
+    linear-gradient(var(--rc), var(--rc)) left bottom / var(--rt) var(--rl) no-repeat,
+    linear-gradient(var(--rc), var(--rc)) right bottom / var(--rl) var(--rt) no-repeat,
+    linear-gradient(var(--rc), var(--rc)) right bottom / var(--rt) var(--rl) no-repeat;
+  transition: opacity 180ms ease;
+  will-change: transform, width, height;
+}
+.reticle[data-visible='true'] {
+  opacity: 0.55;
+}
+.reticle[data-visible='true'][data-state='hover'] {
+  opacity: 1;
+  --rl: 9px;
+}
+.reticle[data-pressed='true'] {
+  --rc: var(--text);
+}
+/* ---------- Icons ---------- */
+.icon {
+  flex: none;
+  vertical-align: -0.15em;
+}
+.btn .icon {
+  margin: 0 -2px;
+}
+.link-ext {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+.link-ext .icon:last-child {
+  opacity: 0.7;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+.link-ext:hover .icon:last-child {
+  opacity: 1;
+  transform: translate(1px, -1px);
 }
 
 *,
@@ -158,16 +296,25 @@ kbd {
 .btn:hover {
   text-decoration: none;
   border-color: var(--text-2);
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--hover-wash);
 }
 .btn--primary {
   background: var(--text);
-  color: var(--accent-ink);
+  color: var(--bg);
   border-color: var(--text);
 }
 .btn--primary:hover {
-  background: #fff;
-  border-color: #fff;
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+.btn--icon {
+  padding: 7px 9px;
+  line-height: 0;
+}
+.btn--icon svg {
+  width: 16px;
+  height: 16px;
+  display: block;
 }
 .btn--ghost {
   color: var(--text-2);
@@ -324,7 +471,7 @@ kbd {
   justify-content: space-between;
   gap: 16px;
   padding: 14px var(--pad);
-  background: rgba(10, 11, 13, 0.85);
+  background: var(--header-bg);
   backdrop-filter: saturate(120%) blur(8px);
   border-bottom: 1px solid var(--line);
 }
@@ -579,6 +726,9 @@ main {
 }
 .contact__list dt {
   color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .contact__list dd {
   overflow-wrap: anywhere;
@@ -642,7 +792,8 @@ main {
   }
 }
 @media (max-width: 720px) {
-  .site-header nav {
+  .site-header nav,
+  .hide-sm {
     display: none;
   }
   .projects {

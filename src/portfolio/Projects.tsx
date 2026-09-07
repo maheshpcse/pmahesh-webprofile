@@ -1,4 +1,5 @@
 import { identity, projects } from '../data/profile';
+import { ArrowUpRightIcon, GitHubIcon } from './Icons';
 import { SectionHeading } from './SectionHeading';
 
 const repoName = (url: string) => url.replace('https://github.com/', '');
@@ -28,12 +29,22 @@ export function Projects() {
               ))}
             </ul>
             <div className="project__links mono">
-              <a href={p.repo} target="_blank" rel="noreferrer">
+              <a className="link-ext" href={p.repo} target="_blank" rel="noreferrer">
+                <GitHubIcon size={14} />
                 {repoName(p.repo)}
+                <ArrowUpRightIcon size={13} />
               </a>
               {p.companion && (
-                <a href={p.companion.repo} target="_blank" rel="noreferrer" title={p.companion.label}>
+                <a
+                  className="link-ext"
+                  href={p.companion.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                  title={p.companion.label}
+                >
+                  <GitHubIcon size={14} />
                   {repoName(p.companion.repo)}
+                  <ArrowUpRightIcon size={13} />
                 </a>
               )}
             </div>
