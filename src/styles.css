@@ -163,8 +163,27 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* Anchor jumps are animated by useSmoothScroll; CSS smooth would fight it. */
+  scroll-behavior: auto;
   -webkit-text-size-adjust: 100%;
+  /* Hidden scrollbar: the page still scrolls by wheel, keys, touch and trackpad. */
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+/* Native scrollbar is the only visible affordance on touch devices - keep it there. */
+@media (pointer: coarse) {
+  html {
+    scrollbar-width: auto;
+    scroll-behavior: smooth;
+  }
+  html::-webkit-scrollbar {
+    width: auto;
+    display: initial;
+  }
 }
 
 html.is-intro,
