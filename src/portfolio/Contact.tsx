@@ -1,4 +1,5 @@
 import { identity } from '../data/profile';
+import { ArrowUpRightIcon, DownloadIcon, GitHubIcon, LinkedInIcon, MailIcon, PhoneIcon, PinIcon } from './Icons';
 import { SectionHeading } from './SectionHeading';
 
 export function Contact() {
@@ -12,34 +13,48 @@ export function Contact() {
       <div className="contact" data-reveal>
         <div className="contact__cta">
           <a className="btn btn--primary" href={resumeUrl} download>
+            <DownloadIcon />
             Download resume (PDF)
           </a>
           <a className="btn btn--ghost" href={resumeUrl} target="_blank" rel="noreferrer">
             View in browser
+            <ArrowUpRightIcon />
           </a>
         </div>
         <dl className="contact__list">
-          <dt>Email</dt>
+          <dt>
+            <MailIcon /> Email
+          </dt>
           <dd>
             <a href={`mailto:${identity.email}`}>{identity.email}</a>
           </dd>
-          <dt>Phone</dt>
+          <dt>
+            <PhoneIcon /> Phone
+          </dt>
           <dd>
             <a href={`tel:${identity.phone.replace(/\s+/g, '')}`}>{identity.phone}</a>
           </dd>
-          <dt>LinkedIn</dt>
+          <dt>
+            <LinkedInIcon /> LinkedIn
+          </dt>
           <dd>
-            <a href={identity.linkedin} target="_blank" rel="noreferrer">
+            <a className="link-ext" href={identity.linkedin} target="_blank" rel="noreferrer">
               {identity.linkedin.replace('https://', '')}
+              <ArrowUpRightIcon size={14} />
             </a>
           </dd>
-          <dt>GitHub</dt>
+          <dt>
+            <GitHubIcon /> GitHub
+          </dt>
           <dd>
-            <a href={identity.github} target="_blank" rel="noreferrer">
+            <a className="link-ext" href={identity.github} target="_blank" rel="noreferrer">
               github.com/{identity.githubHandle}
+              <ArrowUpRightIcon size={14} />
             </a>
           </dd>
-          <dt>Location</dt>
+          <dt>
+            <PinIcon /> Location
+          </dt>
           <dd>{identity.location}</dd>
         </dl>
       </div>
