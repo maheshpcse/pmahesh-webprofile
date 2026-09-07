@@ -6,7 +6,7 @@ const INTERACTIVE = 'a, button, [role="button"], input, textarea, select, summar
  * Structured "reticle" cursor: four corner brackets that trail the pointer and
  * snap around interactive elements. The native cursor is restyled via CSS
  * (SVG data URIs) so pointing still works if this component never mounts.
- * Only active for fine pointers without reduced-motion.
+ * Not active on touch-primary devices or under reduced-motion.
  */
 export function Cursor() {
   const ref = useRef<HTMLDivElement>(null);
@@ -14,9 +14,10 @@ export function Cursor() {
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const fine = window.matchMedia('(pointer: fine)');
+    // Exclude touch-primary devices; some desktop VMs report neither fine nor coarse.
+    const coarse = window.matchMedia('(pointer: coarse)');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (!fine.matches || reduce.matches) return;
+    if (coarse.matches || reduce.matches) return;
 
     document.documentElement.classList.add('has-reticle');
 
