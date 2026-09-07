@@ -1,5 +1,6 @@
 import { identity } from '../data/profile';
 import { useReveal } from '../hooks/useReveal';
+import { useSmoothScroll } from '../hooks/useSmoothScroll';
 import { Contact } from './Contact';
 import { Cursor } from './Cursor';
 import { Header } from './Header';
@@ -16,6 +17,7 @@ interface PortfolioProps {
 
 export function Portfolio({ active, onReplay }: PortfolioProps) {
   useReveal(active);
+  useSmoothScroll(active);
 
   return (
     <div className="portfolio" aria-hidden={!active}>
