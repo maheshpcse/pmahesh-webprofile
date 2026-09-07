@@ -13,7 +13,7 @@ view crossfades into the real HTML portfolio ("MAHESH.OS": Journey, Projects, Sy
 Guardrails baked in:
 
 - The intro is ~6 s, skippable (button, `Esc`, `Enter`, `Space`) and replayable from the header.
-- Returning visitors go straight to the content (`localStorage` flag). Append `?intro=1` to force it.
+- The intro plays on every load and the page always starts at the top. Append `?intro=0` to link straight to content.
 - `prefers-reduced-motion` skips the intro entirely.
 - Small viewports / no WebGL get a CSS-perspective 2D laptop with the same beats.
 - If WebGL fails at runtime an error boundary drops straight into the content.
